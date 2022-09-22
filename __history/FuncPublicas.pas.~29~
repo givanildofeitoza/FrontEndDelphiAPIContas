@@ -1,0 +1,153 @@
+unit FuncPublicas;
+
+
+interface
+
+uses  Classes,data.dbxjson,Lancamentos,System.SysUtils,Vcl.Grids,Vcl.Controls;
+
+
+type TMovDados = class
+private
+  FListaDados     : TList;
+  FMesAtual       :integer;
+  FAnoAtual       :Integer;
+  FTotal          :Currency ;
+  FJsonString     :string;
+  FIdUsuario      :integer;
+  FGridDados      :TStringGrid;
+  Function    DesserializarJson(jsonStringData : String):TList;
+
+public
+ GridDados:TStringGrid;
+ property    Total     :Currency   read  FTotal     write FTotal;
+ property    MesAtual  :integer    read  FMesAtual  write FMesAtual;
+ property    AnoAtual  :integer    read  FAnoAtual  write FAnoAtual;
+ property    IdUsuario :integer    write FIdUsuario;
+
+ constructor Create();
+ procedure   AtualizarLista;
+ procedure   GerarGrid();
+
+end;
+
+implementation
+
+uses
+main,ApiRequestResponse;
+
+constructor TMovDados.Create();
+begin
+   inherited Create;
+   FListaDados:=TList.Create;
+   GridDados:=TStringGrid.Create(nil);
+   GridDados.Align := alClient;
+
+    GridDados.Cells    [0,0]   :='ID';
+    GridDados.Cells    [1,0]   :='DESCRIÇÃO';
+    GridDados.ColWidths[1]     :=250;
+    GridDados.Cells    [2,0]   :='CATEGORIA';
+    GridDados.ColWidths[2]     :=80;
+    GridDados.Cells    [3,0]   :='VALOR R$';
+    GridDados.Cells    [4,0]   :='STATUS';
+    GridDados.Cells    [5,0]   :='MARCADO';
+end;
+Function TMovDados.DesserializarJson(jsonStringData : String):TList;
+var
+   LJSONObject    : TJSONArray;
+   LJsonValue     : TJSONValue;
+   LItem          : TJSONValue;
+   TokenJWT       :String;
+   ListaValores   :Tlist;
+   ObjLancamentos :TLancamentos;
+   l              :integer;
+   Data           :string;
+begin
+
+       ListaValores:=TList.Create();
+
+       LJSONObject := nil;
+       LJSONObject := TJSONObject.ParseJSONValue(jsonStringData) as TJSONarray;
+
+         l:=1;
+         for LJsonValue in LJSONObject do
+         begin
+
+         ObjLancamentos:=TLancamentos.Create();
+
+              for LItem in TJSONArray(LJsonValue) do
+              begin
+                  if(TJSONPair(LItem).JsonString.Value ='id')then
+                  ObjLancamentos.Id := TJSONPair(LItem).JsonValue.Value.ToInteger();
+
+                  if(TJSONPair(LItem).JsonString.Value ='date')then
+                  ObjLancamentos.Data := copy(TJSONPair(LItem).JsonValue.Value,1,10);
+
+                  if(TJSONPair(LItem).JsonString.Value ='describle')then
+                  ObjLancamentos.Descricao := TJSONPair(LItem).JsonValue.Value;
+
+                  if(TJSONPair(LItem).JsonString.Value ='category')then
+                  ObjLancamentos.Tipo := TJSONPair(LItem).JsonValue.Value;
+
+                  if(TJSONPair(LItem).JsonString.Value ='value')then
+                  ObjLancamentos.Valor := TJSONPair(LItem).JsonValue.Value.ToDouble();
+
+                  if(TJSONPair(LItem).JsonString.Value ='state')then
+                  ObjLancamentos.Status := TJSONPair(LItem).JsonValue.Value;
+
+                  if(TJSONPair(LItem).JsonString.Value ='check')then
+                  ObjLancamentos.Marcado := TJSONPair(LItem).JsonValue.Value;
+              end;
+
+              ListaValores.Add(ObjLancamentos);
+
+         end;
+
+
+         Result:= ListaValores;
+
+
+end;
+procedure TMovDados.AtualizarLista;
+begin
+  FJsonString   := ApiGetAll(Glb_IdUsuario);
+  FListaDados   := DesserializarJson(FJsonString);
+end;
+Procedure TMovDados.GerarGrid();
+var
+i,l:integer;
+MesAtual:integer;
+begin
+
+      AtualizarLista;
+
+      Total               :=0;
+      l                   :=1;
+      GridDados.RowCount  :=1;
+      for i:=0 to  FListaDados.Count-1 do
+      begin
+
+            MesAtual                :=StrToInt(copy(TLancamentos(FListaDados.Items[i]).Data,6,2));
+            if(FMesAtual = MesAtual)then
+            begin
+
+              GridDados.RowCount    :=  l+1;
+              GridDados.Cells[0,l]  :=  TLancamentos(FListaDados.Items[i]).id.ToString();
+              GridDados.Cells[1,l]  :=  TLancamentos(FListaDados.Items[i]).Descricao;
+              GridDados.Cells[2,l]  :=  TLancamentos(FListaDados.Items[i]).Tipo;
+              GridDados.Cells[3,l]  :=  formatcurr('##0.00',  TLancamentos(FListaDados.Items[i]).Valor);
+              GridDados.Cells[4,l]  :=  TLancamentos(FListaDados.Items[i]).Status;
+              GridDados.Cells[5,l]  :=  TLancamentos(FListaDados.Items[i]).Marcado;
+
+              l                     := l+1;
+              Total                 :=  Total+TLancamentos(FListaDados.Items[i]).Valor;
+
+            end;
+
+      end;
+
+      if  GridDados.RowCount> 1 then GridDados.FixedRows:= 1;
+
+end;
+
+
+end.

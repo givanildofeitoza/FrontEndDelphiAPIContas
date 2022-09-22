@@ -1,0 +1,206 @@
+unit ApiRequestResponse;
+
+interface
+
+uses
+IdHTTP,IdURI,System.Classes,System.SysUtils,main,data.dbxjson,IdServerIOHandler,IdSSL, IdSSLOpenSSL;
+
+Function LerTokenJWTJson(jsonStringData : String):string;
+Function ApiPostLogin(Email:String; Senha:string):boolean;
+Function ApiPostRegister(ParJson:string):boolean;
+Function ApiGetByID(Parametro:string):string;
+Function ApiGetAll():string;
+Function ApiPostNewValue(ParJson:string):boolean;
+Function ApiPut(ParJson:string):boolean;
+Function ApiDelete(Parametro:string):boolean;
+function IdHTTP():TIdHTTP;
+
+implementation
+
+function IdHTTP():TIdHTTP;
+var
+IdHTTP1  :TIdHTTP;
+LHandler : TIdSSLIOHandlerSocketOpenSSL;
+begin
+
+   IdHTTP1:= TIdHTTP.Create();
+   IdHTTP1.Request.ContentType := 'application/json';
+   IdHTTP1.Request.Accept := '*/*';
+   //Para uso de HTTPs
+   LHandler:= TIdSSLIOHandlerSocketOpenSSL.create(nil);
+   IdHTTP1.IOHandler:=LHandler;
+
+Result:= IdHTTP1;
+
+end;
+
+Function LerTokenJWTJson(jsonStringData : String):string;
+var
+   LJSONObject    : TJSONArray;
+   LJsonValue     : TJSONValue;
+   LItem          : TJSONValue;
+   TokenJWT       :String;
+begin
+
+       LJSONObject := nil;
+       LJSONObject := TJSONObject.ParseJSONValue('['+jsonStringData+']') as TJSONarray;
+
+         for LJsonValue in LJSONObject do
+         begin
+              for LItem in TJSONArray(LJsonValue) do
+              begin
+                  if(TJSONPair(LItem).JsonString.Value ='tokenJWT')then
+                  TokenJWT:= TJSONPair(LItem).JsonValue.Value;
+              end;
+         end;
+
+        Result:= TokenJWT;
+
+end;
+
+Function ApiPostLogin(Email:String; Senha:string):boolean;
+var
+param    :TStringStream;
+response :boolean;
+begin
+   param:=TStringStream.Create('{ "email":"'+Email+'","password":"'+Senha+'","TokenJWT":"","StatusRegistro":"" }');
+
+     try
+       begin
+        Glb_JWT:=LerTokenJWTJson(IdHTTP.Post(TIdURI.URLEncode(Glb_Audience+'Security/v1/Login'),param));
+        Response:=true;
+       end;
+       except on e:Exception do
+       begin
+         Glb_JWT:='';
+         Response:=False;
+       end;
+     end;
+
+     Result:=Response;
+
+end;
+
+Function ApiPostRegister(ParJson:string):boolean;
+var
+Param    :TStringStream;
+response :boolean;
+begin
+    Param:=  TStringStream.Create(ParJson);
+     try
+     begin
+      IdHTTP.Post(TIdURI.URLEncode(Glb_Audience+'Security/v1/Register-NewUser'),Param);
+      response:=true;
+     end;
+     except on e:Exception do
+         Response:=false;
+     end;
+
+     Result:=Response;
+
+end;
+
+Function ApiGetByID(Parametro:string):string;
+var
+param    :TStringStream;
+Audience :string;
+Response :string;
+begin
+
+     IdHTTP.Request.CustomHeaders.Add('Authorization:Bearer ' + Glb_JWT);
+
+     try
+      Response := IdHTTP.Get(TIdURI.URLEncode(Glb_Audience+'api/v1/Get-Value-id/'+Parametro));
+     except on e:Exception do
+         Response:='Não foi possível Obter Dados!';
+     end;
+
+       Result:=Response;
+end;
+
+Function ApiGetAll():string;
+var
+param    :TStringStream;
+Audience :string;
+Response :string;
+begin
+
+     IdHTTP.Request.CustomHeaders.Add('Authorization:Bearer ' + Glb_JWT);
+
+     try
+      Response := IdHTTP.Get(TIdURI.URLEncode(Glb_Audience+'api/v1/Get-ValuesAll/'));
+     except on e:Exception do
+         Response:='Não foi possível Obter Dados!';
+     end;
+
+       Result:=Response;
+end;
+
+Function ApiPostNewValue(ParJson:string):boolean;
+var
+Param    :TStringStream;
+response :boolean;
+begin
+
+   IdHTTP.Request.CustomHeaders.Add('Authorization:Bearer ' + Glb_JWT);
+   Param:=  TStringStream.Create(ParJson);
+
+     try
+     begin
+      IdHTTP.Post(TIdURI.URLEncode(Glb_Audience+'Security/v1/Register-NewUser'),Param);
+      response:=true;
+     end;
+     except on e:Exception do
+         Response:=false;
+     end;
+
+     Result:=Response;
+
+end;
+
+Function ApiPut(ParJson:string):boolean;
+var
+Param    :TStringStream;
+response :boolean;
+begin
+
+   IdHTTP.Request.CustomHeaders.Add('Authorization:Bearer ' + Glb_JWT);
+   Param:=  TStringStream.Create(ParJson);
+
+     try
+     begin
+      IdHTTP.Put(TIdURI.URLEncode(Glb_Audience+'api/v1/Update-Value/'),Param);
+      response:=true;
+     end;
+     except on e:Exception do
+         Response:=false;
+     end;
+
+     Result:=Response;
+
+end;
+
+Function ApiDelete(Parametro:string):boolean;
+var
+param    :TStringStream;
+Audience :string;
+Response :boolean;
+begin
+
+     IdHTTP.Request.CustomHeaders.Add('Authorization:Bearer ' + Glb_JWT);
+
+     try
+     begin
+     IdHTTP.Delete(TIdURI.URLEncode(Glb_Audience+'api/v1/Delete-Value-id/'+Parametro));
+     Response := true;
+     end;
+     except on e:Exception do
+         Response:=false;
+     end;
+
+       Result:=Response;
+end;
+
+
+
+end.

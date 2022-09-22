@@ -1,0 +1,34 @@
+unit Lancamentos;
+
+interface
+
+uses
+System.SysUtils;
+
+Type
+TLancamentos=class
+  private
+   pId        :Integer;
+   pDescricao : string;
+   pData      : string;
+   pValor     : Double;
+   pTipo      : String;
+   pStatus    : string;
+   pMarcado   : string;
+   pIdCliente : integer;
+
+   public
+      property Id       : Integer read pId         write pId;
+      property Descricao: string  read pDescricao  write pDescricao;
+      property Data     : string  read pData       write pData;
+      property Valor    : Double  read pValor      write pValor;
+      property Tipo     : String  read pTipo       write pTipo;
+      property Status   : string  read pStatus     write pStatus;
+      property Marcado  : string  read pMarcado    write pMarcado;
+      property IdCliente: integer read pIdCliente  write pIdCliente;
+
+end;
+
+implementation
+
+end.

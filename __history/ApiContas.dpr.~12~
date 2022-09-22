@@ -1,0 +1,20 @@
+program ApiContas;
+
+uses
+  Vcl.Forms,
+  main in 'main.pas' {_FrmMain},
+  FrmLogin in 'FrmLogin.pas' {_FrmLogin},
+  ApiRequestResponse in 'ApiRequestResponse.pas',
+  Lancamentos in 'Lancamentos.pas',
+  FrmValores in 'FrmValores.pas' {Form1};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(T_FrmMain, _FrmMain);
+  Application.CreateForm(T_FrmLogin, _FrmLogin);
+  Application.CreateForm(TForm1, Form1);
+  Application.Run;
+end.

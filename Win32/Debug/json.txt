@@ -1,0 +1,1 @@
+{ "Date":"2022-09-02","Type":"debito","Describle":"remédio","Category":"lazer","Value":1.00,"State":0,"Check":0,"IdCustomer":1,"NameCustomer":""} 

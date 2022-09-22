@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2017/08/19 12:20:35.000.210,=C:\Users\givan\OneDrive\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/09/03 11:40:12.000.173,=C:\Users\Micro\OneDrive\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/09/03 11:41:31.000.199,C:\Users\Micro\OneDrive\Documents\RAD Studio\Projects\Unit1.pas=C:\givanildo\DEV\DelphiApiContas\main.pas</Transaction>
+    <Transaction>2022/09/03 11:41:31.000.199,C:\Users\Micro\OneDrive\Documents\RAD Studio\Projects\Unit1.dfm=C:\givanildo\DEV\DelphiApiContas\main.dfm</Transaction>
+    <Transaction>2022/09/03 11:41:51.000.538,C:\Users\Micro\OneDrive\Documents\RAD Studio\Projects\Project1.dproj=C:\givanildo\DEV\DelphiApiContas\ApiContas.dproj</Transaction>
+    <Transaction>2022/09/03 11:42:11.000.483,=C:\givanildo\DEV\DelphiApiContas\Unit2.pas</Transaction>
+    <Transaction>2022/09/03 11:49:53.000.133,C:\givanildo\DEV\DelphiApiContas\Unit2.pas=C:\givanildo\DEV\DelphiApiContas\FrmLogin.pas</Transaction>
+    <Transaction>2022/09/03 11:49:53.000.133,C:\givanildo\DEV\DelphiApiContas\Unit2.dfm=C:\givanildo\DEV\DelphiApiContas\FrmLogin.dfm</Transaction>
+    <Transaction>2022/09/05 10:44:40.000.211,=C:\givanildo\DEV\DelphiApiContas\Unit1.pas</Transaction>
+    <Transaction>2022/09/05 10:45:14.000.890,C:\givanildo\DEV\DelphiApiContas\FuncoesPublicas.pas=C:\givanildo\DEV\DelphiApiContas\Unit1.pas</Transaction>
+    <Transaction>2022/09/05 14:13:34.000.606,C:\givanildo\DEV\DelphiApiContas\ApiRequestResponse.pas=C:\givanildo\DEV\DelphiApiContas\FuncoesPublicas.pas</Transaction>
+    <Transaction>2022/09/06 08:37:37.000.451,C:\givanildo\DEV\DelphiApiContas\ApiRequestResponse.pas=C:\givanildo\DEV\DelphiApiContas\ApiRequestController.pas</Transaction>
+    <Transaction>2022/09/06 13:59:43.000.094,C:\givanildo\DEV\DelphiApiContas\ApiRequestController.pas=C:\givanildo\DEV\DelphiApiContas\ApiRequestResponse.pas</Transaction>
+    <Transaction>2022/09/06 14:43:22.000.129,=C:\givanildo\DEV\DelphiApiContas\Unit1.pas</Transaction>
+    <Transaction>2022/09/06 15:00:01.000.924,C:\givanildo\DEV\DelphiApiContas\Lancamentos.pas=C:\givanildo\DEV\DelphiApiContas\Unit1.pas</Transaction>
+    <Transaction>2022/09/06 15:37:35.000.197,=C:\givanildo\DEV\DelphiApiContas\Unit1.pas</Transaction>
+    <Transaction>2022/09/06 15:37:51.000.051,C:\givanildo\DEV\DelphiApiContas\FuncoesPublicas.pas=C:\givanildo\DEV\DelphiApiContas\Unit1.pas</Transaction>
+    <Transaction>2022/09/06 18:14:36.000.417,C:\givanildo\DEV\DelphiApiContas\FuncoesPublicas.pas=</Transaction>
+    <Transaction>2022/09/09 15:11:25.000.738,=C:\givanildo\DEV\DelphiApiContas\Unit1.pas</Transaction>
+    <Transaction>2022/09/09 15:21:20.000.996,C:\givanildo\DEV\DelphiApiContas\Unit1.pas=C:\givanildo\DEV\DelphiApiContas\FrmValores.pas</Transaction>
+    <Transaction>2022/09/09 15:21:20.000.996,C:\givanildo\DEV\DelphiApiContas\Unit1.dfm=C:\givanildo\DEV\DelphiApiContas\FrmValores.dfm</Transaction>
+    <Transaction>2022/09/15 15:56:45.000.615,=C:\givanildo\DEV\DelphiApiContas\Unit1.pas</Transaction>
+    <Transaction>2022/09/15 15:57:17.000.585,C:\givanildo\DEV\DelphiApiContas\Unit1.pas=C:\givanildo\DEV\DelphiApiContas\FuncPublicas.pas</Transaction>
+    <Transaction>2022/09/19 10:17:42.000.708,=C:\givanildo\DEV\DelphiApiContas\Unit1.pas</Transaction>
+    <Transaction>2022/09/19 10:22:26.000.673,C:\givanildo\DEV\DelphiApiContas\Usuario.pas=C:\givanildo\DEV\DelphiApiContas\Unit1.pas</Transaction>
+    <Transaction>2022/09/19 15:50:23.000.801,=C:\givanildo\DEV\DelphiApiContas\Unit1.pas</Transaction>
+    <Transaction>2022/09/19 16:13:28.000.041,C:\givanildo\DEV\DelphiApiContas\FrmCadUsuario.dfm=C:\givanildo\DEV\DelphiApiContas\Unit1.dfm</Transaction>
+    <Transaction>2022/09/19 16:13:28.000.041,C:\givanildo\DEV\DelphiApiContas\FrmCadUsuario.pas=C:\givanildo\DEV\DelphiApiContas\Unit1.pas</Transaction>
+  </Transactions>
+</BorlandProject>

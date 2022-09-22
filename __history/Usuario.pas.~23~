@@ -1,0 +1,106 @@
+unit Usuario;
+
+interface
+
+uses data.dbxjson;
+
+type TUsuarioDados=Class
+  private
+  FId         :string;
+  FNome       :string;
+  FConta      :string;
+  FEmail      :string;
+  FCidade     :string;
+  FUf         :string;
+  FPais       :string;
+  FEndereco   :string;
+  FTelefone   :string;
+  FTokenJWT   :string;
+  FJsonString :string;
+  Procedure   SerializarJson();
+  public
+
+  property Id         :string  read FId       write FId;
+  property Nome       :string  read FNome     write FNome;
+  property Conta      :string  read FConta    write FConta;
+  property Email      :string  read FEmail    write FEmail;
+  property Cidade     :string  read FCidade   write FCidade;
+  property Uf         :string  read FUf       write FUf;
+  property Pais       :string  read FPais     write FPais;
+  property Endereco   :string  read FEndereco write FEndereco;
+  property Telefone   :string  read FTelefone write FTelefone;
+  property TokenJWT   :string  read FTokenJWT write FTokenJWT;
+
+  Constructor Create();
+  procedure DefinirDadosUsuario(pJson:string);
+
+End;
+
+implementation
+
+constructor TUsuarioDados.Create();
+begin
+ inherited Create;
+end;
+procedure TUsuarioDados.DefinirDadosUsuario(pJson:string);
+begin
+   FJsonString := pJson;
+   SerializarJson;
+end;
+procedure TUsuarioDados.SerializarJson;
+var
+   LJSONObject    : TJSONArray;
+   LJsonValue     : TJSONValue;
+   LItem          : TJSONValue;
+begin
+         LJSONObject := nil;
+         LJSONObject := TJSONObject.ParseJSONValue('['+FJsonString+']') as TJSONarray;
+
+         for LJsonValue in LJSONObject do
+         begin
+
+              for LItem in TJSONArray(LJsonValue) do
+              begin
+                  if(TJSONPair(LItem).JsonString.Value ='id')then
+                  FId := TJSONPair(LItem).JsonValue.Value;
+
+                  if(TJSONPair(LItem).JsonString.Value ='name')then
+                  FNome := copy(TJSONPair(LItem).JsonValue.Value,1,10);
+
+                  if(TJSONPair(LItem).JsonString.Value ='email')then
+                  FEmail := TJSONPair(LItem).JsonValue.Value;
+
+                  if(TJSONPair(LItem).JsonString.Value ='account')then
+                  Conta := TJSONPair(LItem).JsonValue.Value;
+
+                  if(TJSONPair(LItem).JsonString.Value ='phone')then
+                   FTelefone  := TJSONPair(LItem).JsonValue.Value;
+
+                  if(TJSONPair(LItem).JsonString.Value ='adderss')then
+                  FEndereco := TJSONPair(LItem).JsonValue.Value;
+
+                  if(TJSONPair(LItem).JsonString.Value ='city')then
+                   FCidade  := TJSONPair(LItem).JsonValue.Value;
+
+                   if(TJSONPair(LItem).JsonString.Value ='uf')then
+                   FUf := TJSONPair(LItem).JsonValue.Value;
+
+                   if(TJSONPair(LItem).JsonString.Value ='country')then
+                  FPais := TJSONPair(LItem).JsonValue.Value;
+
+                   if(TJSONPair(LItem).JsonString.Value ='tokenJWT')then
+                  FTokenJWT := TJSONPair(LItem).JsonValue.Value;
+
+
+              end;
+
+
+
+         end;
+
+
+end;
+
+
+
+end.

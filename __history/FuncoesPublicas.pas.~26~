@@ -1,0 +1,20 @@
+unit FuncoesPublicas;
+
+interface
+
+uses Lancamentos, Classes;
+
+type TListaValores = Class
+private
+  ListaValores = TList;
+public
+ Constructor Create;
+ procedure   Add(pValores:TLancamentos);
+ Function    Count():Integer;
+ Function    Sum(DataI:TDateTime; DataF:TDateTime; Categoria:String):Currency;
+
+End;
+
+implementation
+
+end.

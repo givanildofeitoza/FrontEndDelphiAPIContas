@@ -1,0 +1,31 @@
+unit Lancamentos;
+
+interface
+
+Type
+TLancamentos=class
+
+   _Id  :Integer;
+   _Descricao : string;
+   _Data      : String;
+   _Valor     : Double;
+   _Tipo      : String;
+   _Status    : string;
+   _Marcado   : string;
+   _IdCliente : integer;
+
+  public
+      property Id       : Integer read _Id         write _Id;
+      property Descricao: string  read _Descricao  write _Descricao;
+      property Data     : String  read _Data       write _Data;
+      property Valor    : Double  read _Valor      write _Valor;
+      property Tipo     : String  read _Tipo       write _Tipo;
+      property Status   : string  read _Status     write _Status;
+      property Marcado  : string  read _Marcado    write _Marcado;
+      property IdCliente: integer read _IdCliente  write _IdCliente;
+
+end;
+
+implementation
+
+end.
